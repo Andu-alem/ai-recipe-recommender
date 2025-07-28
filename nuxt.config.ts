@@ -3,6 +3,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
+  runtimeConfig: {
+    dbUri: process.env.MONGODB_URI
+  },
   modules: [
     '@nuxt/eslint',
     'nuxt-mongoose',
@@ -10,7 +13,8 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@vueuse/nuxt',
     '@nuxt/devtools',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    'nuxt-lucide-icons'
   ],
   mongoose: {
     uri: process.env.MONGODB_URI,
