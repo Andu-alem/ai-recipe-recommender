@@ -22,7 +22,7 @@ const handleSubmit = async () => {
             password: formData.email,
         },{
             onSuccess: () => {
-                useRouter().push("/")
+                useRouter().push("/dashboard")
             },
             onError: () => {
                 toast.error("Error while logging in, please try again")
@@ -102,7 +102,7 @@ const signInWithGoogle = async () => {
                     Sign In
                   </span>
                   <span v-else class="flex items-center justify-center">
-                    <Loader2 class="mr-2 size-4 animate-spin" />
+                    <LucideLoader2 class="mr-2 size-4 animate-spin" />
                     Signing In...
                   </span>
                   <LucideArrowRight v-if="!isLoading" class="ml-2 size-4 group-hover:translate-x-1 transition-transform" />
