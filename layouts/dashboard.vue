@@ -1,16 +1,33 @@
+<script setup lang="ts">
+import type { SidebarProps } from '~/components/ui/sidebar';
+
+const props = withDefaults(defineProps<SidebarProps>(), {
+  collapsible: 'icon',
+})
+
+</script>
 <template>
     <SidebarProvider>
-        <Sidebar>
-            <SidebarHeader class="border-b border-stone-200">
-                <div class="flex items-center space-x-2 px-4 py-3">
-                <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
-                    <span class="text-lg">🥘</span>
-                </div>
-                <div>
-                    <h1 class="text-lg font-bold text-emerald-800">PantryPal</h1>
-                    <p class="text-xs text-stone-600">Smart Recipe Assistant</p>
-                </div>
-                </div>
+        <Sidebar v-bind="props">
+            <SidebarHeader>
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton            
+                            size="lg"
+                            class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                        >
+                            <div class="flex aspect-square size-8 items-center justify-center rounded-full bg-emerald-500 text-sidebar-primary-foreground">
+                                <span class="text-lg">🥘</span>
+                            </div>
+                            <div class="grid flex-1 text-left text-sm leading-tight">
+                                <span class="truncate font-semibold text-emerald-800">
+                                    ChefGPT
+                                </span>
+                                <span class="truncate text-xs text-stone-600">Smart Recipe Assistant</span>
+                            </div>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
@@ -61,15 +78,18 @@
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
+            <SidebarFooter>
+                <SidebarFooterNav />
+            </SidebarFooter>
         </Sidebar>
         <SidebarInset>
             <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4 bg-white">
                 <SidebarTrigger class="-ml-1" />
                 <div class="flex items-center space-x-2">
-                    <div class="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center">
-                        <span class="text-sm">🥘</span>
+                    <div class="flex aspect-square size-8 items-center justify-center rounded-full bg-emerald-500 text-sidebar-primary-foreground">
+                        <span class="text-lg">🥘</span>
                     </div>
-                    <span class="font-semibold text-emerald-800">PantryPal</span>
+                    <span class="font-semibold text-emerald-800">ChefGPT</span>
                 </div>
             </header>
             <main class="flex-1">
