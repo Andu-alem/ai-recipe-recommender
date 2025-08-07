@@ -2,6 +2,7 @@
 import { useForm } from 'vee-validate'
 import { formSchema } from '~/lib/preferenceSchema'
 import { usePreferencesStore } from '~/stores/preferences'
+import type { Preference } from '~/types'
 
 definePageMeta({
     layout: "dashboard"
@@ -14,24 +15,29 @@ const ingredientsList = computed(() => {
     return separated?.map(item => item.trim()).filter(item => item !== "")
 })
 
+// fetch initial preferences
+const { data } = await useFetch<Preference>('/api/preference')
+
 const restrictions = ["vegan", "vegetarian", "gluten-free", "keto", "halal", "kosher"]
 const mealTypeOptions = ["breakfast", "lunch", "dinner", "snack", "dessert"]
 const skillLevelOptions = ["beginner", "intermediate", "expert"]
 const flavorOptions = ["spicy", "sweet", "savory", "sild"]
 
-
+const preferenceStore = usePreferencesStore()
 const { handleSubmit } = useForm({
   validationSchema: formSchema,
   initialValues: {
-    dietaries: [],
-    cookingTime: [30],
-    flavors: [],
+    dietaries: data.value?.dietaries ?? [],
+    mealType: data.value?.mealType,
+    cookingTime: data.value?.cookingTime ?? [30],
+    skillLevel: data.value?.skillLevel,
+    ingredients: data.value?.ingredients,
+    flavors: data.value?.flavors ?? []
   },
 })
 
-const preferenceStore = usePreferencesStore()
 const onSubmit = handleSubmit((values) => {
-  preferenceStore.addPreferences(values)
+  preferenceStore.addPreference(values, data.value?._id)
   useRouter().push("/dashboard/recipes")
 })
 </script>
@@ -166,34 +172,34 @@ const onSubmit = handleSubmit((values) => {
       </Card>
 
       <Card>
-          <CardContent class="p-6 h-full space-y-4 flex flex-col items-center justify-center">
-            <FormField v-slot="{ handleChange, value }" name="ingredients">
-              <FormItem class="w-full flex flex-col items-center">
-                <FormLabel class="text-base text-emerald-800 dark:text-emerald-500">What's in your pantry?</FormLabel>
-                <FormControl>
-                  <div class="relative w-full">
-                    <LucideSearch class="absolute left-3 top-2 w-5 h-5 text-stone-400" />
-                    <Input
-                        placeholder="Enter ingredients (comma-separated)"
-                        class="pl-10 py-3 text-base border-stone-200 rounded-xl"
-                        :model-value="value"
-                        @update:model-value="$event => {
-                          ingredientInput = String($event)
-                          handleChange($event)
-                        }"
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-                <FormDescription>
-                  <div class="space-x-1">
-                    <Badge v-for="ingredient in ingredientsList" :key="ingredient" class="bg-emerald-100 text-emerald-800 dark:text-emerald-500 capitalize">{{ ingredient }}</Badge>
-                  </div>
-                </FormDescription>
-              </FormItem>
-            </FormField>
-            <Button type="submit" class="w-full">Generate Recipes</Button>
-          </CardContent>
+        <CardContent class="p-6 h-full space-y-4 flex flex-col items-center justify-center">
+          <FormField v-slot="{ handleChange, value }" name="ingredients">
+            <FormItem class="w-full flex flex-col items-center">
+              <FormLabel class="text-base text-emerald-800 dark:text-emerald-500">What's in your pantry?</FormLabel>
+              <FormControl>
+                <div class="relative w-full">
+                  <LucideSearch class="absolute left-3 top-2 w-5 h-5 text-stone-400" />
+                  <Input
+                      placeholder="Enter ingredients (comma-separated)"
+                      class="pl-10 py-3 text-base border-stone-200 rounded-xl"
+                      :model-value="value"
+                      @update:model-value="$event => {
+                        ingredientInput = String($event)
+                        handleChange($event)
+                      }"
+                  />
+                </div>
+              </FormControl>
+              <FormMessage />
+              <FormDescription>
+                <div class="space-x-1">
+                  <Badge v-for="ingredient in ingredientsList" :key="ingredient" class="bg-emerald-100 text-emerald-800 dark:text-emerald-500 capitalize">{{ ingredient }}</Badge>
+                </div>
+              </FormDescription>
+            </FormItem>
+          </FormField>
+          <Button type="submit" class="w-full">Generate Recipes</Button>
+        </CardContent>
       </Card>
     </form>
   </div>
