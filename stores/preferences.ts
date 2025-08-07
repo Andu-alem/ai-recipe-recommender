@@ -1,17 +1,29 @@
 import { defineStore } from 'pinia'
-import type { PreferenceType } from '../lib/preferenceSchema';
+import type { PreferenceType } from '../lib/preferenceSchema'
+import type { ObjectId } from 'mongoose'
 
 export const usePreferencesStore = defineStore('preferenceStore', () => {
-    const preferences = ref<PreferenceType>()
+    const preference = ref<PreferenceType>()
 
-    const addPreferences = (pref: PreferenceType) => {
-        preferences.value = {
-            ...pref
+    const addPreference = async (pref: PreferenceType, id?: ObjectId) => {
+        try {
+            await $fetch('/api/preference', {
+                method: 'POST',
+                body: {
+                    pref,
+                    id
+                }
+            })
+            preference.value = {
+                ...pref
+            }
+        } catch {
+            throw new Error("Error while adding preference to database")
         }
     }
 
     return {
-        preferences,
-        addPreferences
+        preference,
+        addPreference
     }
 })
