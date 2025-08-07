@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
         headers: event.headers
     })
     try {
-        return await RecipeSchema.findOne({
+        return await RecipeSchema.find({
             user: session?.session.userId
         })
     }
