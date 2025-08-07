@@ -16,7 +16,7 @@ const { data, pending, error, refresh } = await useFetch<GeneratedRecipe[]>('/ap
 })
 
 if (data && preference) {
-    recipes.value = data.value.map(recipe => ({
+    recipes.value = data.value?.map(recipe => ({
         ...preference,
         ...recipe,
         ingredients: recipe.tags,
