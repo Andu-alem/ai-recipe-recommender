@@ -19,14 +19,17 @@ export type GeneratedRecipe = {
   instructions: string[]
 }
 
-export type Recipe = GeneratedRecipe & {
-  _id: ObjectId
-  user: ObjectId
+export type BaseRecipe = GeneratedRecipe & {
   dietaries: string[]
   mealType: string
   flavors: string[]
   skillLevel: string
   userIngredients: string
+}
+
+export type Recipe = BaseRecipe & {
+  _id: ObjectId
+  user: ObjectId
   createdAt: string
   updatedAt: string
 }
