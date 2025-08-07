@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Recipe, BaseRecipe } from '~/types'
 
-const props = defineProps<{
+const { recipe } = defineProps<{
     recipe: Recipe | BaseRecipe
 }>()
 
