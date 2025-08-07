@@ -16,7 +16,7 @@ const { data, pending, error, refresh } = await useFetch<GeneratedRecipe[]>('/ap
 </script>
 
 <template>
-    <div class="min-h-screen bg-stone-50">
+    <div class="min-h-screen">
         <div class="max-w-4xl mx-auto p-4">
             <div v-if="pending" class="flex justify-center">
                 <LucideLoader2 class="w-10 h-10 text-emerald-500 animate-spin" />
@@ -38,23 +38,23 @@ const { data, pending, error, refresh } = await useFetch<GeneratedRecipe[]>('/ap
                 <Card
                     v-for="recipe in data"
                     :key="recipe.name"
-                    class="shadow-lg gap-0 border-0 cursor-pointer hover:shadow-xl transition-shadow"
+                    class="shadow-lg gap-0 cursor-pointer hover:shadow-xl transition-shadow"
                 >
                     <CardHeader>
                         <CardTitle class="flex justify-between items-center px-2">
-                            <h3 class="font-semibold text-stone-800">{{recipe.name}}</h3>
+                            <h3 class="font-semibold">{{recipe.name}}</h3>
                             <FavoriteButton :recipe />
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <Separator />
-                        <div class="text-sm my-2">
+                        <div class="text-sm space-y-1">
                             <h3 class="text-primary font-semibold">Instructions</h3>
                             <div v-for="instruction, index in recipe.instructions" :key="instruction">
                                 {{ index+1 }} - {{ instruction }}
                             </div>
                         </div>
-                        <div class="flex flex-wrap items-center space-x-4 text-sm text-stone-600 mb-3">
+                        <div class="flex flex-wrap items-center gap-2 text-sm text-foreground/85 my-4">
                             <div class="flex items-center space-x-1">
                                 <LucideClock class="w-4 h-4" />
                                 <span>{{recipe.cookTime}}</span>
@@ -68,11 +68,11 @@ const { data, pending, error, refresh } = await useFetch<GeneratedRecipe[]>('/ap
                             </Badge>
                         </div>
                         <div class="flex flex-wrap gap-1 mb-3">
-                            <Badge v-for="tag in recipe.tags" :key="tag" variant="secondary" class="text-xs bg-emerald-100 text-emerald-700">
+                            <Badge v-for="tag in recipe.tags" :key="tag" variant="secondary" class="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-700 dark:text-emerald-100">
                                 {{tag}}
                             </Badge>
                         </div>
-                        <div class="text-xs text-stone-500">You have: {{preference?.ingredients}}</div>
+                        <div class="text-xs text-foreground/85">You have: {{preference?.ingredients}}</div>
                     </CardContent>
                 </Card>
             </div>
