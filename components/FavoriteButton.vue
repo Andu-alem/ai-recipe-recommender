@@ -38,14 +38,13 @@ async function saveRecipe() {
     <Button
         variant="ghost"
         size="sm"
-        class=" bg-white/80 hover:bg-white rounded-full p-2"
+        class=" rounded-full p-2"
         @click="saveRecipe"
     >
         <LucideHeart
             class="w-4 h-4"
             :class="{
                 'fill-red-500 text-red-500': isSaved,
-                'text-stone-600': false,
                 'animate-pulse': isSaving
             }"
         />
