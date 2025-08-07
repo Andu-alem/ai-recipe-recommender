@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { GeneratedRecipe } from '../types'
 import { usePreferencesStore } from '~/stores/preferences'
+import { toast } from 'vue-sonner'
 
 const isSaved = ref(false)
 const isSaving = ref(false)
@@ -9,7 +10,7 @@ const props = defineProps<{
     recipe: GeneratedRecipe,
 }>()
 
-const { preferences } = usePreferencesStore()
+const { preference } = usePreferencesStore()
 
 async function saveRecipe() {
     isSaving.value = true
@@ -17,15 +18,15 @@ async function saveRecipe() {
         await $fetch('/api/favorite', {
             method: 'POST',
             body: {
-                ...preferences,
-                userIngredients: preferences?.ingredients ?? '',
+                ...preference,
+                userIngredients: preference?.ingredients ?? '',
                 ...props.recipe
             }
         })
         isSaved.value = true
     } catch {
         // make a toast here to notify a user about the error
-        console.log("Error has occured here, do something")
+        toast.error("Error has occured here, do something")
     } finally {
         isSaving.value = false
     }
