@@ -10,7 +10,7 @@
                         <div class="flex aspect-square size-8 items-center justify-center rounded-full bg-emerald-500 text-sidebar-primary-foreground">
                             <span class="text-lg">🥘</span>
                         </div>
-                        <span class="font-semibold text-emerald-800">ChefGPT</span>
+                        <span class="font-bold text-3xl text-emerald-800 dark:text-emerald-400">ChefGPT</span>
                     </div>
                     <ThemeToggler />
                 </div>

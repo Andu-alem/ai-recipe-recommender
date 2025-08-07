@@ -56,11 +56,8 @@ const onSubmit = handleSubmit((values) => {
             <FormItem>
               <div class="mb-2">
                 <FormLabel class="text-base text-emerald-800 dark:text-emerald-500">
-                  Dietary Restrictions
+                  What is your dietary choice?
                 </FormLabel>
-                <FormDescription>
-                  Select dietary restricions.
-                </FormDescription>
               </div>
               <div class="flex flex-wrap gap-3">
                 <FormField v-for="restriction in restrictions" v-slot="{ value, handleChange }" :key="restriction" type="checkbox" :value="restriction" :unchecked-value="false" name="dietaries">
@@ -113,7 +110,7 @@ const onSubmit = handleSubmit((values) => {
                   @update:model-value="componentField['onUpdate:modelValue']"
                 />
                 <FormDescription class="flex justify-between">
-                  <span>How many minutes are you available?</span>
+                  <span>How many available minitues do you have?</span>
                   <span>{{ value?.[0] }} min</span>
                 </FormDescription>
               </FormControl>
@@ -158,7 +155,7 @@ const onSubmit = handleSubmit((values) => {
                     <div class="flex flex-wrap gap-4">
                         <div v-for="option in skillLevelOptions" :key="option" class="flex items-center space-x-2">
                             <RadioGroupItem :id="option" :value="option" />
-                            <Label for="beginner" class="text-stone-600 capitalize">
+                            <Label for="beginner" class="capitalize">
                                 {{  option  }}
                             </Label>
                         </div>
