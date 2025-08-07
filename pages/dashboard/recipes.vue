@@ -6,12 +6,11 @@ definePageMeta({
     layout: "dashboard"
 })
 
-const { preferences } = usePreferencesStore()
-console.log("user preferences are ---- ", preferences)
+const { preference } = usePreferencesStore()
 
 const { data, pending, error, refresh } = await useFetch<GeneratedRecipe[]>('/api/recipe', {
     method: 'POST',
-    body: JSON.stringify(preferences)
+    body: JSON.stringify(preference)
 })
 
 </script>
@@ -19,6 +18,22 @@ const { data, pending, error, refresh } = await useFetch<GeneratedRecipe[]>('/ap
 <template>
     <div class="min-h-screen bg-stone-50">
         <div class="max-w-4xl mx-auto p-4">
+            <div v-if="pending" class="flex justify-center">
+                <LucideLoader2 class="w-10 h-10 text-emerald-500 animate-spin" />
+            </div>
+            <div v-if="error" class="h-[75vh] flex flex-col justify-center items-center sm:mx-10">
+                <h2>
+                    It seems like error has occured, would you like to go back and change preferences? 
+                </h2>
+                <div class="mt-4 flex gap-4">
+                    <Button as-child>
+                        <NuxtLink to="/dashboard">Change Preferences</NuxtLink>
+                    </Button>
+                    <Button variant="ghost" @click="refresh">
+                        Refresh
+                    </Button>
+                </div>
+            </div>
             <div v-if="data" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <Card
                     v-for="recipe in data"
@@ -39,7 +54,7 @@ const { data, pending, error, refresh } = await useFetch<GeneratedRecipe[]>('/ap
                                 {{ index+1 }} - {{ instruction }}
                             </div>
                         </div>
-                        <div class="flex items-center space-x-4 text-sm text-stone-600 mb-3">
+                        <div class="flex flex-wrap items-center space-x-4 text-sm text-stone-600 mb-3">
                             <div class="flex items-center space-x-1">
                                 <LucideClock class="w-4 h-4" />
                                 <span>{{recipe.cookTime}}</span>
@@ -49,7 +64,7 @@ const { data, pending, error, refresh } = await useFetch<GeneratedRecipe[]>('/ap
                                 <span>{{recipe.servings}} servings</span>
                             </div>
                             <Badge variant="outline" class="text-xs">
-                                {{preferences?.skillLevel}}
+                                {{preference?.skillLevel}}
                             </Badge>
                         </div>
                         <div class="flex flex-wrap gap-1 mb-3">
@@ -57,7 +72,7 @@ const { data, pending, error, refresh } = await useFetch<GeneratedRecipe[]>('/ap
                                 {{tag}}
                             </Badge>
                         </div>
-                        <div class="text-xs text-stone-500">You have: {{preferences?.ingredients}}</div>
+                        <div class="text-xs text-stone-500">You have: {{preference?.ingredients}}</div>
                     </CardContent>
                 </Card>
             </div>
