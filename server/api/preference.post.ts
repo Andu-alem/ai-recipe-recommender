@@ -6,10 +6,20 @@ export default defineEventHandler(async (event) => {
     const session = await auth.api.getSession({
         headers: event.headers
     })
+    
     if (session) {
-        return await new PreferenceSchema({
-            user: session.user.id,
-            ...body,
-        }).save()
+        if (body.id) {
+            return await PreferenceSchema.findOneAndUpdate(
+                { _id: body.id },
+                {
+                    ...body.pref
+                }
+            )
+        } else {
+            return await new PreferenceSchema({
+                user: session.user.id,
+                ...body.pref
+            }).save()
+        }
     }
 })
