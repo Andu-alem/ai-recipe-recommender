@@ -193,7 +193,7 @@ const onSubmit = handleSubmit((values) => {
               <FormMessage />
               <FormDescription>
                 <div class="space-x-1">
-                  <Badge v-for="ingredient in ingredientsList" :key="ingredient" class="bg-emerald-100 text-emerald-800 dark:text-emerald-500 capitalize">{{ ingredient }}</Badge>
+                  <Badge v-for="ingredient in ingredientsList" :key="ingredient" class="bg-emerald-100 text-emerald-800 capitalize">{{ ingredient }}</Badge>
                 </div>
               </FormDescription>
             </FormItem>
