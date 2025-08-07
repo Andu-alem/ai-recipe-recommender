@@ -14,7 +14,8 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxt/devtools',
     '@pinia/nuxt',
-    'nuxt-lucide-icons'
+    'nuxt-lucide-icons',
+    '@nuxtjs/color-mode'
   ],
   mongoose: {
     uri: process.env.MONGODB_URI,
@@ -38,5 +39,8 @@ export default defineNuxtConfig({
      * @default "./components/ui"
      */
     componentDir: './components/ui'
+  },
+  colorMode: {
+    classSuffix: ''
   }
 })
