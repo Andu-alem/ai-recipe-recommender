@@ -4,7 +4,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
   runtimeConfig: {
-    dbUri: process.env.MONGODB_URI
+    dbUri: process.env.MONGODB_URI,
+    GOOGLE_GENERATIVE_AI_API_KEY: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET:process.env.GOOGLE_CLIENT_SECRET
   },
   modules: [
     '@nuxt/eslint',
