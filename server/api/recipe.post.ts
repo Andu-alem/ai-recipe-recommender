@@ -1,47 +1,30 @@
-const mockRecipes = [
-    {
-        name: "Mediterranean Chickpea Salad",
-        cookTime: "15 min",
-        servings: 4,
-        tags: ["Vegan", "Gluten-Free", "Healthy"],
-        ingredients: ["Chickpeas", "Cucumber", "Tomatoes", "Red onion", "Olive oil", "Lemon juice", "Parsley"],
-        instructions: [
-            "Drain and rinse chickpeas",
-            "Dice cucumber, tomatoes, and red onion",
-            "Mix all vegetables with chickpeas",
-            "Whisk olive oil and lemon juice",
-            "Toss salad with dressing and parsley",
-        ]
-    },
-    {
-        name: "Creamy Mushroom Pasta",
-        cookTime: "25 min",
-        servings: 2,
-        tags: ["Vegetarian", "Comfort Food"],
-        ingredients: ["Pasta", "Mushrooms", "Heavy cream", "Garlic", "Parmesan", "Butter"],
-        instructions: [
-            "Cook pasta according to package directions",
-            "Sauté mushrooms and garlic in butter",
-            "Add cream and simmer",
-            "Toss with pasta and parmesan",
-            "Season and serve hot",
-        ]
-    },
-    {
-        name: "Asian Stir-Fry Bowl",
-        cookTime: "20 min",
-        servings: 3,
-        tags: ["Healthy", "Quick", "Gluten-Free"],
-        ingredients: ["Rice", "Broccoli", "Carrots", "Soy sauce", "Ginger", "Sesame oil"],
-        instructions: [
-            "Cook rice in rice cooker",
-            "Heat oil in wok or large pan",
-            "Stir-fry vegetables until tender-crisp",
-            "Add sauce and toss",
-            "Serve over rice",
-        ]
-    },
-]
+import { generateObject } from "ai"
+import { createGoogleGenerativeAI } from "@ai-sdk/google"
+import { aiRecipeSchema } from '~/lib/aiRecipeSchema'
+import type { Preference } from "~/types"
+
+
+function generatePrompt(preference: Preference) {
+    const prompt = `
+        You are a culinary expert AI that generates recipes based on user preferences and available ingredients.
+
+        User Preferences:
+        - Flavours: ${preference.flavors}
+        - Dietary Restrictions: ${preference.dietaries}
+        - Meal Type: ${preference.mealType}
+        - Cooking Skill Level: ${preference.skillLevel}
+        - Time Available: ${preference.cookingTime[0]}
+
+        Available Ingredients:
+        ${preference.ingredients}
+
+        Generate 3 to 5 recipes that:
+        - Use only or mostly the provided ingredients
+        - Match the user's preferences
+        - Are creative but practical
+    `
+    return prompt
+}
 
 export default defineEventHandler(async (event) => {
     // accept preferences
@@ -49,8 +32,20 @@ export default defineEventHandler(async (event) => {
     // accept a structure response from llm
     // respond back the llm response to the user
     const body = await readBody(event) // preferences
+    const config = useRuntimeConfig()
 
-    console.log("user preferences are ---- ", body)
+    const gemini = createGoogleGenerativeAI({
+        apiKey: config.GOOGLE_GENERATIVE_AI_API_KEY
+    })
 
-    return mockRecipes
+    const { object } = await generateObject({
+        model: gemini("gemini-1.5-flash"),
+        output: "array",
+        schema: aiRecipeSchema,
+        temperature: 0.7,
+        maxTokens: 2048,
+        prompt: generatePrompt(body),
+    })
+
+    return object
 })

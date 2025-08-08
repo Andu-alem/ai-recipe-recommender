@@ -16,6 +16,7 @@ const { data, pending, error, refresh } = await useFetch<GeneratedRecipe[]>('/ap
 })
 
 if (data && preference) {
+    console.log("Ai Generated recipe data is ---- ", data)
     recipes.value = data.value?.map(recipe => ({
         ...preference,
         ...recipe,
