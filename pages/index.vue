@@ -6,7 +6,9 @@
           <nav class="space-x-4">
             <Button variant="ghost" to="#features">Features</Button>
             <Button variant="ghost" to="#how-it-works">How It Works</Button>
-            <Button variant="ghost" to="#get-started">Get Started</Button>
+            <Button variant="ghost" as-child>
+                <NuxtLink to="/signup">Get Started</NuxtLink>
+            </Button>
             <ThemeToggler />
           </nav>
         </div>
@@ -17,7 +19,9 @@
         <p class="text-lg text-secondary-foreground mb-8">
           ChefGPT helps you cook smarter by generating delicious recipes based on your preferences and ingredients.
         </p>
-        <Button size="lg" color="orange" to="/app">Start Cooking</Button>
+        <Button size="lg" as-child>
+            <NuxtLink to="/dashboard">Start Cooking</NuxtLink>
+        </Button>
   
         <!-- Features Section -->
         <section id="features" class="mt-24">
@@ -57,11 +61,13 @@
         <!-- Call to Action -->
         <section id="get-started" class="mt-24">
           <h3 class="text-3xl font-bold mb-4">Ready to Cook Smarter?</h3>
-          <Button size="lg" color="orange" to="/app">Launch ChefGPT</Button>
+          <Button size="lg" as-child>
+            <NuxtLink to="/dashboard">Launch ChefGPT</NuxtLink>
+          </Button>
         </section>
       </main>
   
-      <footer class="mt-24 bg-white border-t py-6 text-center text-sm text-gray-500">
+      <footer class="mt-24 border-t py-6 text-center text-sm">
         © 2025 ChefGPT. Built with ❤️ using Nuxt, Tailwind, and shadcn-vue.
       </footer>
     </div>
