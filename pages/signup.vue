@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { toast } from 'vue-sonner';
+import { toast } from 'vue-sonner'
 import { authClient } from "~/lib/auth-client"
 
 const { errors, validateForm } = useFormValidation()
-const showPassword = ref(false);
-const isLoading = ref(false);
+const showPassword = ref(false)
+const isLoading = ref(false)
 
 const resData = ref({})
 const resError = ref({})
@@ -13,20 +13,20 @@ const formData = reactive({
   name: "",
   email: "",
   password: ""
-});
+})
 
 
 const passwordChecks = computed(() => ({
   length: formData.password.length >= 8,
   hasUpperCase: /[A-Z]/.test(formData.password),
   hasNumber: /[0-9]/.test(formData.password)
-}));
+}))
 
 
 const handleSubmit = async () => {
   if (validateForm(formData, passwordChecks)) {
     try {
-      isLoading.value = true;
+      isLoading.value = true
       const { data, error } = await authClient.signUp.email({
         email: formData.email,
         password: formData.email,
@@ -42,25 +42,13 @@ const handleSubmit = async () => {
       resData.value = data ?? {}
       resError.value = error ?? {}
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error('Registration error:', error)
     } finally {
-      isLoading.value = false;
+      isLoading.value = false
     }
   }
-};
+}
 
-const signInWithGoogle = async () => {
-  try {
-    isLoading.value = true;
-    // Simulate Google OAuth integration
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log('Sign in with Google clicked');
-  } catch (error) {
-    console.error('Google sign-in error:', error);
-  } finally {
-    isLoading.value = false;
-  }
-};
 </script>
 
 <template>
@@ -152,12 +140,7 @@ const signInWithGoogle = async () => {
                   <LucideArrowRight v-if="!isLoading" class="ml-2 size-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
 
-                <Button variant="outline" class="w-full group" :disabled="isLoading" @click="signInWithGoogle">
-                  <GoogleLogo />
-                  <span class="group-hover:translate-x-0.5 transition-transform">
-                    Sign in with Google
-                  </span>
-                </Button>
+                <GoogleSigninButton />
               </div>
             </form>
             <div class="mx-auto mt-8 flex justify-center gap-1 text-sm text-muted-foreground">
