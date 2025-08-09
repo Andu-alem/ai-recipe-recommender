@@ -16,7 +16,6 @@ const { data, pending, error, refresh } = await useFetch<GeneratedRecipe[]>('/ap
 })
 
 if (data && preference) {
-    console.log("Ai Generated recipe data is ---- ", data)
     recipes.value = data.value?.map(recipe => ({
         ...preference,
         ...recipe,
@@ -47,7 +46,7 @@ if (data && preference) {
                 </div>
             </div>
             <div v-if="data" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <RecipeCard v-for="recipe in recipes" :key="recipe.name" :recipe />
+                <RecipeCard v-for="recipe in recipes" :key="recipe.name" :recipe :isGenerated="true" />
             </div>
         </div>
     </div>
