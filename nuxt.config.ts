@@ -18,7 +18,8 @@ export default defineNuxtConfig({
     '@nuxt/devtools',
     '@pinia/nuxt',
     'nuxt-lucide-icons',
-    '@nuxtjs/color-mode'
+    '@nuxtjs/color-mode',
+    'motion-v/nuxt'
   ],
   mongoose: {
     uri: process.env.MONGODB_URI,
