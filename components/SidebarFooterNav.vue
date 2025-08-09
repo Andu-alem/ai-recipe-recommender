@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from 'lucide-vue-next'
 import { useSidebar } from './ui/sidebar'
 import { authClient } from '~/lib/auth-client'
 
 const { value:{ data } } = authClient.useSession()
 const { isMobile } = useSidebar()
+
+async function signOut() {
+  await authClient.signOut({
+    fetchOptions: {
+      onSuccess: () => {
+        useRouter().push("/")
+      }
+    }
+  })
+}
+
 </script>
 
 <template>
@@ -33,7 +36,7 @@ const { isMobile } = useSidebar()
               <span class="truncate font-semibold">{{ data?.user.name }}</span>
               <span class="truncate text-xs">{{ data?.user.email }}</span>
             </div>
-            <ChevronsUpDown class="ml-auto size-4" />
+            <LucideChevronsUpDown class="ml-auto size-4" />
           </SidebarMenuButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent
@@ -57,30 +60,8 @@ const { isMobile } = useSidebar()
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <Sparkles />
-              Upgrade to Pro
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <BadgeCheck />
-              Account
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CreditCard />
-              Billing
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Bell />
-              Notifications
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <LogOut />
+          <DropdownMenuItem @click="signOut">
+            <LucideLogOut />
             Log out
           </DropdownMenuItem>
         </DropdownMenuContent>

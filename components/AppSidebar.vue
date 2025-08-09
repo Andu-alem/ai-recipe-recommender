@@ -19,10 +19,10 @@ const props = withDefaults(defineProps<SidebarProps>(), {
                           <span class="text-lg">🥘</span>
                       </div>
                       <div class="grid flex-1 text-left text-sm leading-tight">
-                          <span class="truncate font-semibold text-emerald-800">
+                          <span class="truncate font-semibold text-emerald-800 dark:text-emerald-400">
                               ChefGPT
                           </span>
-                          <span class="truncate text-xs text-stone-600">Smart Recipe Assistant</span>
+                          <span class="truncate text-xs text-forground/75">Smart Recipe Assistant</span>
                       </div>
                   </SidebarMenuButton>
               </SidebarMenuItem>
@@ -34,47 +34,23 @@ const props = withDefaults(defineProps<SidebarProps>(), {
           <SidebarGroupContent>
               <SidebarMenu>
                   <SidebarMenuItem>
-                      <SidebarMenuButton>
-                          <LucideHome class="w-4 h-4" />
-                          <span>Home</span>
+                      <SidebarMenuButton as-child>
+                            <NuxtLink to="/dashboard" class="flex items-center gap-2">
+                                <LucideChefHat class="w-4 h-4" />
+                                <span>Generate Recipes</span>
+                            </NuxtLink>
                       </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                      <SidebarMenuButton>
-                          <LucideSearch class="w-4 h-4" />
-                          <span>Find Recipes</span>
-                      </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                      <SidebarMenuButton>
-                          <LucideChefHat class="w-4 h-4" />
-                          <span>Add Ingridients</span>
-                      </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                      <SidebarMenuButton>
-                          <LucideBookOpen class="w-4 h-4" />
-                          <span>Saved Recipies</span>
+                      <SidebarMenuButton as-child>
+                            <NuxtLink to="/dashboard/favourites" class="flex items-center gap-2">
+                                <LucideBookOpen class="w-4 h-4" />
+                                <span>Saved Recipies</span>
+                            </NuxtLink>
                       </SidebarMenuButton>
                   </SidebarMenuItem>
               </SidebarMenu>
           </SidebarGroupContent>
-          </SidebarGroup>
-
-          <SidebarGroup>
-              <SidebarGroupLabel>Quick Access</SidebarGroupLabel>
-              <SidebarGroupContent>
-              <SidebarMenu>
-                  <SidebarMenuItem>
-                  <SidebarMenuButton>
-                      <LucideHeart class="w-4 h-4" />
-                      <span>
-                          savedRecipes goes here
-                      </span>
-                  </SidebarMenuButton>
-                  </SidebarMenuItem>
-              </SidebarMenu>
-              </SidebarGroupContent>
           </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
