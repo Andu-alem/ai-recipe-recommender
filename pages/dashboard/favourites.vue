@@ -38,7 +38,7 @@ const { data, pending, error, refresh } = await useFetch<Recipe[]>('/api/favorit
                 </div>
             </div>
             <div v-if="data && data.length > 1" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <RecipeCard v-for="recipe in data" :key="recipe.name" :recipe="recipe" />
+                <RecipeCard v-for="recipe in data" :key="recipe.name" :recipe="recipe" :is-generated="false" />
             </div>
         </div>
     </div>

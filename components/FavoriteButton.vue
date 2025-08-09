@@ -24,6 +24,7 @@ async function saveRecipe() {
             }
         })
         isSaved.value = true
+        toast.success("Recipe saved successfuly.")
     } catch {
         // make a toast here to notify a user about the error
         toast.error("Error has occured here, do something")

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type { Recipe, BaseRecipe } from '~/types'
 
-const { recipe } = defineProps<{
-    recipe: Recipe | BaseRecipe
+const { recipe, isGenerated } = defineProps<{
+    recipe: Recipe | BaseRecipe,
+    isGenerated: boolean
 }>()
 
 </script>
@@ -14,6 +15,7 @@ const { recipe } = defineProps<{
         <CardHeader>
             <CardTitle class="flex justify-between items-center px-2">
                 <h3 class="font-semibold">{{recipe.name}}</h3>
+                <FavoriteButton v-if="isGenerated" :recipe />
             </CardTitle>
         </CardHeader>
         <CardContent class="space-y-4">
