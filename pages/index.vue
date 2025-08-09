@@ -75,7 +75,7 @@ const workSteps = [
                             class="inline-flex items-center justify-center rounded-full border border-transparent px-8 py-3 text-lg font-bold text-white shadow-lg transition-all duration-300 transform hover:scale-105 hover:bg-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
                             as-child
                         >
-                            <NuxtLink to="/dasboard">Get Cooking</NuxtLink>
+                            <NuxtLink to="/dashboard">Get Cooking</NuxtLink>
                         </Button>
                     </Motion>
                 </div>
@@ -161,7 +161,7 @@ const workSteps = [
                             class="inline-flex items-center justify-center rounded-full border border-transparent px-8 py-3 text-lg font-bold text-white shadow-lg transition-all duration-300 transform hover:scale-105 hover:bg-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
                             as-child
                         >
-                            <NuxtLink to="/dasboard">Cook for Free</NuxtLink>
+                            <NuxtLink to="/dashboard">Cook for Free</NuxtLink>
                         </Button>
                     </CardContent>
                 </Card>
