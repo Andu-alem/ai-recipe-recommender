@@ -1,4 +1,13 @@
 <script setup lang="ts">
+useHead({
+    meta: [
+        {
+            name: 'description',
+            content: 'Generate recipes using AI based on your ingredients and preferences.',
+        },
+    ]
+})
+
 const features = [
     {
         icon: "target",
