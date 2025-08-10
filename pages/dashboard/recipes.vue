@@ -46,7 +46,7 @@ if (data && preference) {
                 </div>
             </div>
             <div v-if="data" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <RecipeCard v-for="recipe in recipes" :key="recipe.name" :recipe />
+                <GeneratedRecipeCard v-for="recipe in recipes" :key="recipe.name" :recipe />
             </div>
         </div>
     </div>
