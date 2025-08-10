@@ -1,75 +1,67 @@
-# Nuxt Minimal Starter
+# ChefGPT
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+ChefGPT is an AI-powered recipe recommender web application that helps you turn your available ingredients into delicious recipes instantly. Built with a modern tech stack, ChefGPT combines seamless authentication, AI integration, and user-friendly features to provide a personalized cooking experience.
 
-## Setup
+---
 
-Make sure to install dependencies:
+## Features
 
-```bash
-# npm
-npm install
+- **Authentication**  
+  Secure user authentication with [better-auth](https://better-auth.dev/) supporting both email/password and Google Sign-In.
 
-# pnpm
-pnpm install
+- **Data Persistence**  
+  User data and favorite recipes are stored securely in MongoDB using MongoDB Atlas for reliable cloud hosting.
 
-# yarn
-yarn install
+- **AI-Powered Recipe Suggestions**  
+  Leveraging [Vercel AI SDK](https://vercel.com/docs/concepts/ai) and Google Gemini API for generating up to 5 tailored recipe recommendations based on user ingredients and preferences.
 
-# bun
-bun install
-```
+- **Form Validation**  
+  Robust and declarative form validation with [vee-validate](https://vee-validate.logaretm.com/v4/) and schema validation using [Zod](https://zod.dev/) for a smooth user experience.
 
-## Development Server
+- **Structured AI Responses**  
+  AI replies are parsed and displayed in a clean, structured format for easy readability and interaction.
 
-Start the development server on `http://localhost:3000`:
+- **Favorites & Persistence**  
+  Users can save their favorite recipes for quick access later.
 
-```bash
-# npm
-npm run dev
+- **Modern UI & Animations**  
+  Built with Nuxt.js, Tailwind CSS, and shadcn-vue to provide a sleek, responsive, and accessible interface with subtle animations.
 
-# pnpm
-pnpm dev
+---
 
-# yarn
-yarn dev
+## Tech Stack
 
-# bun
-bun run dev
-```
+- **Frontend:**  
+  - [Nuxt.js](https://nuxt.com)  
+  - [Tailwind CSS v4](https://tailwindcss.com)  
+  - [shadcn-vue](https://ui.shadcn.com/vue)  
 
-## Production
+- **Backend / API & Database:**  
+  - MongoDB & [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)  
+  - [Better-auth](https://better-auth.dev/) (authentication service)  
 
-Build the application for production:
+- **AI Integration:**  
+  - [Vercel AI SDK](https://vercel.com/docs/concepts/ai)  
+  - Google Gemini API  
 
-```bash
-# npm
-npm run build
+- **Form Validation:**  
+  - [vee-validate](https://vee-validate.logaretm.com/v4/)  
+  - [Zod](https://zod.dev/)  
 
-# pnpm
-pnpm build
+- **Deployment:**  
+  - Frontend deployed on [Netlify](https://netlify.com)  
 
-# yarn
-yarn build
+---
 
-# bun
-bun run build
-```
+## Setup & Installation
 
-Locally preview production build:
+Feel free to clone and extend or customize it for your need
 
-```bash
-# npm
-npm run preview
+1. **Clone the repository**
 
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+   ```bash
+   git clone https://github.com/Andualem/ai-recipe-recommender.git
+   cd ai-recipe-recommender
+   pnpm install
+   pnpm dev
+   ```
