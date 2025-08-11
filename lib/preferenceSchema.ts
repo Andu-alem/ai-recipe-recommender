@@ -17,6 +17,9 @@ export const preferenceSchema = z.object({
     flavors: z.array(z.string()).refine(value => value.some(item => item), {
         message: 'You have to select at least one flavor.',
     }),
+    cuisine: z.string({
+        message: 'You have to select at least one cuisine preference.',
+    }),
     skillLevel: z.string({
         message: "You have to choose a skill level."
     }),
