@@ -39,7 +39,7 @@ const deleteRecipe = async () => {
             <div class="flex justify-center items-center gap-4">
                 <AlertDialogCancel class="m-0 w-20">Cancel</AlertDialogCancel>
                 <AlertDialogAction
-                    class="w-20 bg-red-800"
+                    class="w-20 bg-red-400 hover:bg-red-400/85 dark:bg-red-800 dark:hover:bg-red-800/85"
                     @click="deleteRecipe"
                 >yes</AlertDialogAction>
             </div>
