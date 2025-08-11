@@ -10,5 +10,5 @@ export const aiRecipeSchema = z.object({
                 .transform(value => Number(value))
                 .describe("Only in alph numerical value like 3 or 4"),
     nutritionInfo: z.string()
-                    .describe("Nutritional value of this recipe"),
+                    .describe("Only general nutritional value of this dish, avoid any additional info or warning"),
 })
