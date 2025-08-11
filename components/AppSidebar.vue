@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import type { SidebarProps } from '~/components/ui/sidebar';
+import type { SidebarProps } from '~/components/ui/sidebar'
+import { useSidebar } from './ui/sidebar/utils'
 
 const props = withDefaults(defineProps<SidebarProps>(), {
   collapsible: 'icon',
 })
+
+const { toggleSidebar } = useSidebar()
 
 </script>
 <template>
@@ -34,7 +37,7 @@ const props = withDefaults(defineProps<SidebarProps>(), {
           <SidebarGroupContent>
               <SidebarMenu>
                   <SidebarMenuItem>
-                      <SidebarMenuButton as-child>
+                      <SidebarMenuButton as-child @click="toggleSidebar">
                             <NuxtLink to="/dashboard" class="flex items-center gap-2">
                                 <LucideChefHat class="w-4 h-4" />
                                 <span>Generate Recipes</span>
@@ -42,7 +45,7 @@ const props = withDefaults(defineProps<SidebarProps>(), {
                       </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
-                      <SidebarMenuButton as-child>
+                      <SidebarMenuButton as-child @click="toggleSidebar">
                             <NuxtLink to="/dashboard/favourites" class="flex items-center gap-2">
                                 <LucideBookOpen class="w-4 h-4" />
                                 <span>Saved Recipies</span>
