@@ -17,6 +17,7 @@ export type GeneratedRecipe = {
   tags: string[]
   ingredients: string[]
   instructions: string[]
+  nutritionInfo: string
 }
 
 export type BaseRecipe = GeneratedRecipe & {
@@ -24,6 +25,7 @@ export type BaseRecipe = GeneratedRecipe & {
   mealType: string
   flavors: string[]
   skillLevel: string
+  cuisine: string
   userIngredients: string
 }
 
