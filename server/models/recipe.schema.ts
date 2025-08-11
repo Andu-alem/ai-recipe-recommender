@@ -50,6 +50,14 @@ export const RecipeSchema = defineMongooseModel<Recipe>({
             type: String,
             required: true
         },
+        nutritionInfo: {
+            type: String,
+            required: true
+        },
+        cuisine: {
+            type: String,
+            required: true
+        }
     },
     options: {
         timestamps: true,

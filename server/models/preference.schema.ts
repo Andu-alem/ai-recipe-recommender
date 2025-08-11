@@ -30,6 +30,10 @@ export const PreferenceSchema = defineMongooseModel<Preference>({
       type: String,
       required: true
     },
+    cuisine: {
+      type: String,
+      required: true
+    }
   },
   options: {
     timestamps: true,
