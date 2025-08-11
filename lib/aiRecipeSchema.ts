@@ -6,5 +6,6 @@ export const aiRecipeSchema = z.object({
     cookTime: z.string().transform(value => [Number(value)]),
     ingredients: z.array(z.string()),
     instructions: z.array(z.string()),
-    servings: z.string().transform(value => Number(value))
+    servings: z.string().transform(value => Number(value)),
+    nutritionInfo: z.string(),
 })
