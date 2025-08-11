@@ -5,6 +5,7 @@ import { toast } from 'vue-sonner'
 
 const isSaved = ref(false)
 const isSaving = ref(false)
+const isSuccessful = ref(false)
 
 const props = defineProps<{
     recipe: GeneratedRecipe,
@@ -13,6 +14,10 @@ const props = defineProps<{
 const { preference } = usePreferencesStore()
 
 async function saveRecipe() {
+    if (isSaved.value) {
+        toast.warning("Already saved!")
+        return
+    }
     isSaving.value = true
     try {
         await $fetch('/api/favorite', {
@@ -23,6 +28,7 @@ async function saveRecipe() {
                 ...props.recipe
             }
         })
+        isSuccessful.value = true
         isSaved.value = true
         toast.success("Recipe saved successfuly.")
     } catch {
@@ -45,7 +51,7 @@ async function saveRecipe() {
         <LucideHeart
             class="w-4 h-4"
             :class="{
-                'fill-red-500 text-red-500': isSaved,
+                'fill-amber-500 text-amber-500': isSuccessful,
                 'animate-pulse': isSaving
             }"
         />
