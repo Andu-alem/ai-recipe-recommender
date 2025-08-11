@@ -9,7 +9,7 @@ async function signOut() {
   await authClient.signOut({
     fetchOptions: {
       onSuccess: () => {
-        useRouter().push("/")
+        useRouter().push("/sign-in")
       }
     }
   })
