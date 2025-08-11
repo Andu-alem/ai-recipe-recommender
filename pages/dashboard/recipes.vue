@@ -19,7 +19,7 @@ if (data && preference) {
     recipes.value = data.value?.map(recipe => ({
         ...preference,
         ...recipe,
-        ingredients: recipe.tags,
+        ingredients: recipe.ingredients,
         userIngredients: preference.ingredients
     }))
 }
@@ -46,7 +46,10 @@ if (data && preference) {
                 </div>
             </div>
             <div v-if="data" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <GeneratedRecipeCard v-for="recipe in recipes" :key="recipe.name" :recipe />
+                <GeneratedRecipeCard 
+                    v-for="recipe in recipes" 
+                    :key="recipe.name" 
+                    :recipe />
             </div>
         </div>
     </div>
