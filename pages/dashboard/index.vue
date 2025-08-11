@@ -79,7 +79,7 @@ const onSubmit = handleSubmit((values) => {
             </FormItem>
           </FormField>
 
-          <div class="flex justify-between items-center">
+          <div class="flex items-center gap-7">
             <!-- Meal Type Selection Field -->
             <FormField v-slot="{ componentField }" name="mealType">
               <FormItem>
