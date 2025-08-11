@@ -4,6 +4,13 @@ export default defineEventHandler(async (event) => {
     const session = await auth.api.getSession({
         headers: event.headers
     })
+
+    if (!session) {
+        throw createError({
+            statusCode: 403,
+            statusMessage: "Unauthorized user request",
+        })
+    }
     try {
         return await RecipeSchema.find({
             user: session?.session.userId
@@ -11,8 +18,8 @@ export default defineEventHandler(async (event) => {
     }
     catch {
         throw createError({
-            statusCode: 400,
-            statusMessage: 'not found!',
+            statusCode: 500,
+            statusMessage: 'Server Error!',
         })
     }
 })
