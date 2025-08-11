@@ -18,7 +18,7 @@ const ingredientsList = computed(() => {
 // fetch initial preferences
 const { data } = await useFetch<Preference>('/api/preference')
 
-const restrictions = ["vegan", "vegetarian", "rww-food", "pescatarian", "gluten-free", "lactose-intolerance", "nut-free", "soy-free", "egg-free", "shelifish-free", "low-sugar", "low-sodium", "keto", "halal", "kosher"]
+const restrictions = ["vegan", "vegetarian", "raw-food", "pescatarian", "gluten-free", "lactose-intolerance", "nut-free", "soy-free", "egg-free", "shelifish-free", "low-sugar", "low-sodium", "keto", "halal", "kosher"]
 const mealTypeOptions = ["breakfast", "lunch", "dinner", "snack", "dessert"]
 const skillLevelOptions = ["beginner", "intermediate", "expert"]
 const flavorOptions = ["spicy", "sweet", "sour", "savory", "sild", "bitter", "salty", "smoky", "tangy", "earthy", "herbal"]
@@ -32,7 +32,8 @@ const { handleSubmit } = useForm({
     cookingTime: data.value?.cookingTime ?? [30],
     skillLevel: data.value?.skillLevel,
     ingredients: data.value?.ingredients,
-    flavors: data.value?.flavors ?? []
+    flavors: data.value?.flavors ?? [],
+    cuisine: data.value?.cuisine
   },
 })
 
@@ -56,7 +57,7 @@ const onSubmit = handleSubmit((values) => {
             <FormItem>
               <div class="mb-2">
                 <FormLabel class="text-base text-emerald-800 dark:text-emerald-500">
-                  What is your dietary choice?
+                  What are your dietary choices?
                 </FormLabel>
               </div>
               <div class="flex flex-wrap gap-3">
@@ -78,23 +79,40 @@ const onSubmit = handleSubmit((values) => {
             </FormItem>
           </FormField>
 
-          <!-- Meal Type Selection Field -->
-          <FormField v-slot="{ componentField }" name="mealType">
-            <FormItem>
-              <FormLabel class="text-base text-emerald-800 dark:text-emerald-500">Meal Type</FormLabel>
-              <FormControl>
-                <Select v-bind="componentField">
-                    <SelectTrigger class="rounded-xl">
-                        <SelectValue placeholder="Select meal type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem v-for="option in mealTypeOptions" :key="option" :value="option" class="capitalize">{{ option }}</SelectItem>
-                    </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          </FormField>
+          <div class="flex justify-between items-center">
+            <!-- Meal Type Selection Field -->
+            <FormField v-slot="{ componentField }" name="mealType">
+              <FormItem>
+                <FormLabel class="text-base text-emerald-800 dark:text-emerald-500">Meal Type</FormLabel>
+                <FormControl>
+                  <Select v-bind="componentField">
+                      <SelectTrigger class="rounded-xl">
+                          <SelectValue placeholder="Select meal type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                          <SelectItem v-for="option in mealTypeOptions" :key="option" :value="option" class="capitalize">{{ option }}</SelectItem>
+                      </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            </FormField>
+
+            <!-- Cuisine Input Section -->
+            <FormField v-slot="{ componentField }" name="cuisine">
+              <FormItem>
+                <FormLabel class="text-base text-emerald-800 dark:text-emerald-500">Cusine Preference</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Eg. Thai or Italian or Chinese ..."
+                    class="text-base border-stone-200 rounded-xl"
+                    v-bind="componentField"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            </FormField>
+          </div>
 
           <!-- Available Cooking Time Selection -->
           <FormField v-slot="{ componentField, value }" name="cookingTime">
