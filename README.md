@@ -33,7 +33,7 @@ Built with a modern, scalable tech stack, ChefGPT blends **seamless authenticati
 ## 🛠 Tech Stack
 
 **Frontend**
-- [Nuxt.js](https://nuxt.com) — SSR & SPA framework
+- [Nuxt.js v3](https://nuxt.com) — Vue based meta framework
 - [Tailwind CSS v4](https://tailwindcss.com) — Utility-first styling
 - [shadcn-vue](https://ui.shadcn.com/vue) — Modern UI components
 - [Pinia](https://pinia.vuejs.org/) — State management
@@ -69,8 +69,8 @@ pnpm dev
 The app will be available at **[http://localhost:3000](http://localhost:3000)**.
 
 ---
-
-** ⚙️ Environment Variables**
+ 
+## ⚙️ Environment Variables
 
 Create a `.env` file in the root directory and configure the following variables:
 
@@ -85,12 +85,12 @@ GEMINI_API_KEY=your_google_gemini_api_key
 
 ---
 
-** 📷 Screenshots**
+## 📷 Screenshots
 
 ![chefGPT](/public/chefgpt.png)
 ---
 
-** 📌 Roadmap**
+## 📌 Roadmap
 
 * [ ] Add meal type filters (breakfast, lunch, dinner)
 * [ ] Support for more AI models
@@ -99,7 +99,7 @@ GEMINI_API_KEY=your_google_gemini_api_key
 
 ---
 
-** 🤝 Contributing**
+## 🤝 Contributing
 
 Contributions, ideas, and suggestions are welcome!
 Feel free to fork the repository and submit a pull request.
@@ -107,7 +107,7 @@ Or clone it and extend and customize for your use case.
 
 ---
 
-** 📄 License**
+## 📄 License
 
 This project is licensed under the **MIT License**.
 
