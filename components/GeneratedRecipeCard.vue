@@ -12,37 +12,79 @@ const { recipe } = defineProps<{
     >
         <CardHeader>
             <CardTitle class="flex justify-between items-center px-2">
-                <h3 class="font-semibold">{{recipe.name}}</h3>
+                <h3 class="font-semibold leading-5">{{recipe.name}}</h3>
                 <FavoriteButton :recipe />
             </CardTitle>
         </CardHeader>
         <CardContent class="space-y-4">
             <Separator />
-            <div class="text-sm space-y-1">
-                <h3 class="text-primary font-semibold">Instructions</h3>
-                <div v-for="instruction, index in recipe.instructions" :key="instruction">
-                    {{ index+1 }} - {{ instruction }}
-                </div>
-            </div>
-            <div class="flex flex-wrap items-center gap-2 text-sm text-foreground/85">
-                <div class="flex items-center space-x-1">
-                    <LucideClock class="w-4 h-4" />
-                    <span>{{recipe.cookTime}}</span>
-                </div>
-                <div class="flex items-center space-x-1">
-                    <LucideUsers class="w-4 h-4" />
-                    <span>{{recipe.servings}} servings</span>
-                </div>
-                <Badge variant="outline" class="text-xs">
-                    {{recipe.skillLevel}}
+            <div class="flex flex-wrap items-center gap-2">
+                <Badge variant="outline" class="text-amber-500">
+                    <div class="flex items-center space-x-1">
+                        <LucideClock class="" />
+                        <span>{{recipe.cookTime}}</span>
+                    </div>
                 </Badge>
+                <Badge variant="outline" class="text-amber-500">
+                    <div class="flex items-center space-x-1">
+                        <LucideUsers class="" />
+                        <span>{{recipe.servings}} servings</span>
+                    </div>
+                </Badge>
+                <Badge variant="outline" class="text-amber-500 capitalize">{{ recipe.cuisine }}</Badge>
+                <Badge variant="outline" class="text-amber-500 capitalize">{{ recipe.mealType }}</Badge>
+                <Badge variant="outline" class="text-amber-500 capitalize">{{ recipe.skillLevel }}</Badge>
             </div>
+
+            <!-- Nutrition info -->
+            <div class="flex flex-wrap items-center gap-1">
+                <Badge v-for="flavor in recipe.flavors" :key="flavor" variant="secondary" class="capitalize">{{ flavor }}</Badge>
+            </div>
+            <div>
+                <p class="font-thin">{{ recipe.nutritionInfo }}</p>
+            </div>
+
+            <!-- Ingredients list -->
+            <div class="space-y-2 text-sm">
+                <h3 class="text-primary font-semibold">Needed Ingredients</h3>
+                <div class="flex flex-wrap items-center gap-2">
+                    <Badge v-for="ingredient in recipe.ingredients" :key="ingredient" variant="outline" class="capitalize">
+                        {{ ingredient }}
+                    </Badge>
+                </div>
+                <p class="text-xs text-foreground/85">You have : <span class="capitalize">{{ recipe.userIngredients }}</span></p>
+            </div>
+
+            <!-- Dietary Restrictions liste -->
+            <div class="space-y-2 text-sm">
+                <h3 class="text-primary font-semibold">Dietary Restrictions</h3>
+                <div class="flex flex-wrap items-center gap-2">
+                    <Badge v-for="restriction in recipe.dietaries" :key="restriction" variant="outline" class="capitalize">
+                        {{ restriction }}
+                    </Badge>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <Collapsible>
+                <CollapsibleTrigger class="w-full">
+                    <div class="w-full flex justify-between items-center">
+                        <span class="text-primary font-semibold">Instructions</span>
+                        <LucideChevronDown class="text-accent font-semibold" />
+                    </div>
+                </CollapsibleTrigger>
+                <CollapsibleContent class="text-sm tracking-wide font-thin">
+                    <div v-for="instruction, index in recipe.instructions" :key="instruction">
+                        {{ index+1 }} - {{ instruction }}
+                    </div>
+                </CollapsibleContent>
+            </Collapsible>
+            
             <div class="flex flex-wrap gap-1">
-                <Badge v-for="ingredient in recipe.ingredients" :key="ingredient" variant="secondary" class="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-700 dark:text-emerald-100">
-                    {{ingredient}}
+                <Badge v-for="tag in recipe.tags" :key="tag" class="text-xs">
+                    {{tag}}
                 </Badge>
             </div>
-            <div class="text-xs text-foreground/85">You have: {{recipe.userIngredients}}</div>
         </CardContent>
     </Card>
 </template>
