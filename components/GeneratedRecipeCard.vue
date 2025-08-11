@@ -46,12 +46,19 @@ const { recipe } = defineProps<{
 
             <!-- Ingredients list -->
             <div class="space-y-2 text-sm">
-                <h3 class="text-primary font-semibold">Needed Ingredients</h3>
-                <div class="flex flex-wrap items-center gap-2">
-                    <Badge v-for="ingredient in recipe.ingredients" :key="ingredient" variant="outline" class="capitalize">
-                        {{ ingredient }}
-                    </Badge>
-                </div>
+                <Collapsible>
+                    <CollapsibleTrigger class="w-full">
+                        <div class="w-full flex justify-between items-center">
+                            <span class="text-primary font-semibold">Needed Ingredients</span>
+                            <LucideChevronDown class="text-accent font-semibold" />
+                        </div>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent class="text-sm tracking-wide font-thin">
+                        <div v-for="ingredient in recipe.ingredients" :key="ingredient">
+                            {{ ingredient }}
+                        </div>
+                    </CollapsibleContent>
+                </Collapsible>
                 <p class="text-xs text-foreground/85">You have : <span class="capitalize">{{ recipe.userIngredients }}</span></p>
             </div>
 
