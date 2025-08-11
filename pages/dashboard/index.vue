@@ -18,10 +18,10 @@ const ingredientsList = computed(() => {
 // fetch initial preferences
 const { data } = await useFetch<Preference>('/api/preference')
 
-const restrictions = ["vegan", "vegetarian", "gluten-free", "keto", "halal", "kosher"]
+const restrictions = ["vegan", "vegetarian", "rww-food", "pescatarian", "gluten-free", "lactose-intolerance", "nut-free", "soy-free", "egg-free", "shelifish-free", "low-sugar", "low-sodium", "keto", "halal", "kosher"]
 const mealTypeOptions = ["breakfast", "lunch", "dinner", "snack", "dessert"]
 const skillLevelOptions = ["beginner", "intermediate", "expert"]
-const flavorOptions = ["spicy", "sweet", "savory", "sild"]
+const flavorOptions = ["spicy", "sweet", "sour", "savory", "sild", "bitter", "salty", "smoky", "tangy", "earthy", "herbal"]
 
 const preferenceStore = usePreferencesStore()
 const { handleSubmit } = useForm({
