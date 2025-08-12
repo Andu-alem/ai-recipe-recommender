@@ -90,15 +90,6 @@ GEMINI_API_KEY=your_google_gemini_api_key
 ![chefGPT](/public/chefgpt.png)
 ---
 
-## 📌 Roadmap
-
-* [ ] Add meal type filters (breakfast, lunch, dinner)
-* [ ] Support for more AI models
-* [ ] Grocery list export
-* [ ] Offline mode with IndexedDB
-
----
-
 ## 🤝 Contributing
 
 Contributions, ideas, and suggestions are welcome!
