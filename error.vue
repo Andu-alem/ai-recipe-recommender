@@ -3,13 +3,17 @@ definePageMeta({
     layout: "error-page-layout"
 })
 
+defineProps({
+  error: Object,
+})
+
 </script>
 
 <template>
     <div class="flex flex-col items-center justify-center gap-4">
-        <h1 class="text-primary">404</h1>
-        <h3>It seems you're lost</h3>
-        <p class="text-center">The page you're looking for doesn't exist</p>
+        <h1 class="text-amber-500 text-4xl">{{ error?.statusCode }}</h1>
+        <h1>{{ error?.message }}</h1>
+        <p class="text-center">There was an error 😱</p>
         <Button variant="ghost" as-child>
             <NuxtLink to="/">Back to Home</NuxtLink>
         </Button>
