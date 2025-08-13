@@ -25,6 +25,10 @@ Built with a modern, scalable tech stack, ChefGPT blends **seamless authenticati
 - **❤️ Favorites System**  
   Save your go-to recipes for quick access anytime.
 
+- **Rate Limiting wih Upstash**
+
+- **Error Monitoring and Tracing With Sentry**
+
 - **🎨 Modern UI & Animations**  
   Designed with **Nuxt.js**, **Tailwind CSS**, and **shadcn-vue** for a sleek, responsive, and accessible experience with smooth animations.
 
@@ -41,6 +45,8 @@ Built with a modern, scalable tech stack, ChefGPT blends **seamless authenticati
 **Backend / Auth / Database**
 - [MongoDB](https://www.mongodb.com/) & [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) — Cloud database
 - [better-auth](https://better-auth.dev/) — Authentication service
+- Upstash
+- Sentry
 
 **AI Integration**
 - [Vercel AI SDK](https://vercel.com/docs/concepts/ai)
