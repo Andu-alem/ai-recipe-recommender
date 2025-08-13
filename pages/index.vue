@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  prerender: true
+})
+
 useHead({
     meta: [
         {

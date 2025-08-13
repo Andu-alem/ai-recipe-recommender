@@ -5,41 +5,72 @@ import { usePreferencesStore } from '~/stores/preferences'
 import type { Preference } from '~/types'
 
 definePageMeta({
-    layout: "dashboard"
+  layout: 'dashboard',
+  ssr: false
 })
 
-const ingredientInput = ref<string|undefined>()
-const ingredientsList = computed(() => {
-    const separated = ingredientInput.value?.split(",")
-    
-    return separated?.map(item => item.trim()).filter(item => item !== "")
-})
+const restrictions = [
+  'vegan', 'vegetarian', 'raw-food', 'pescatarian', 'gluten-free', 'lactose-intolerance',
+  'nut-free', 'soy-free', 'egg-free', 'shelifish-free', 'low-sugar', 'low-sodium',
+  'keto', 'halal', 'kosher'
+]
+const mealTypeOptions = ['breakfast', 'lunch', 'dinner', 'snack', 'dessert']
+const skillLevelOptions = ['beginner', 'intermediate', 'expert']
+const flavorOptions = [
+  'spicy', 'sweet', 'sour', 'savory', 'sild', 'bitter', 'salty', 'smoky',
+  'tangy', 'earthy', 'herbal'
+]
 
-// fetch initial preferences
-const { data } = await useFetch<Preference>('/api/preference')
+// Local ingredient handling
+const ingredientInput = ref<string>('') 
+const ingredientsList = computed(() =>
+  ingredientInput.value
+    .split(',')
+    .map(i => i.trim())
+    .filter(Boolean)
+)
 
-const restrictions = ["vegan", "vegetarian", "raw-food", "pescatarian", "gluten-free", "lactose-intolerance", "nut-free", "soy-free", "egg-free", "shelifish-free", "low-sugar", "low-sodium", "keto", "halal", "kosher"]
-const mealTypeOptions = ["breakfast", "lunch", "dinner", "snack", "dessert"]
-const skillLevelOptions = ["beginner", "intermediate", "expert"]
-const flavorOptions = ["spicy", "sweet", "sour", "savory", "sild", "bitter", "salty", "smoky", "tangy", "earthy", "herbal"]
+// Fetch preferences after hydration
+const { data: existingPreferences, pending } = useFetch<Preference>('/api/preference',
+  { server: false }
+)
 
 const preferenceStore = usePreferencesStore()
-const { handleSubmit } = useForm({
+
+// Initialize form
+const { handleSubmit, setValues } = useForm({
   validationSchema: formSchema,
   initialValues: {
-    dietaries: data.value?.dietaries ?? [],
-    mealType: data.value?.mealType,
-    cookingTime: data.value?.cookingTime ?? [30],
-    skillLevel: data.value?.skillLevel,
-    ingredients: data.value?.ingredients,
-    flavors: data.value?.flavors ?? [],
-    cuisine: data.value?.cuisine
-  },
+    dietaries: [],
+    mealType: '',
+    cookingTime: [30],
+    skillLevel: '',
+    ingredients: '',
+    flavors: [],
+    cuisine: ''
+  }
 })
 
-const onSubmit = handleSubmit((values) => {
-  preferenceStore.addPreference(values, data.value?._id)
-  useRouter().push("/dashboard/recipes")
+// Populate form once preferences are loaded
+watch(existingPreferences, pref => {
+  if (pref) {
+    setValues({
+      dietaries: pref.dietaries ?? [],
+      mealType: pref.mealType ?? '',
+      cookingTime: pref.cookingTime ?? [30],
+      skillLevel: pref.skillLevel ?? '',
+      ingredients: pref.ingredients ?? '',
+      flavors: pref.flavors ?? [],
+      cuisine: pref.cuisine ?? ''
+    })
+    ingredientInput.value = pref.ingredients ?? ''
+  }
+}, { immediate: true })
+
+// Submit handler
+const onSubmit = handleSubmit(values => {
+  preferenceStore.addPreference(values, existingPreferences.value?._id)
+  navigateTo('/dashboard/recipes')
 })
 </script>
 
@@ -98,7 +129,7 @@ const onSubmit = handleSubmit((values) => {
               </FormItem>
             </FormField>
 
-            <!-- Cuisine Input Section -->
+            <!-- Cusine Input Section -->
             <FormField v-slot="{ componentField }" name="cuisine">
               <FormItem>
                 <FormLabel class="text-base text-emerald-800 dark:text-emerald-500">Cusine Preference</FormLabel>
@@ -173,7 +204,7 @@ const onSubmit = handleSubmit((values) => {
                     <div class="flex flex-wrap gap-4">
                         <div v-for="option in skillLevelOptions" :key="option" class="flex items-center space-x-2">
                             <RadioGroupItem :id="option" :value="option" />
-                            <Label for="beginner" class="capitalize">
+                            <Label :for="option" class="capitalize">
                                 {{  option  }}
                             </Label>
                         </div>
@@ -198,9 +229,9 @@ const onSubmit = handleSubmit((values) => {
                       placeholder="Enter ingredients (comma-separated)"
                       class="pl-10 py-3 text-base border-stone-200 rounded-xl"
                       :model-value="value"
-                      @update:model-value="$event => {
-                        ingredientInput = String($event)
-                        handleChange($event)
+                      @update:model-value="val => {
+                        ingredientInput = String(val)
+                        handleChange(val)
                       }"
                   />
                 </div>
