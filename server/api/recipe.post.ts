@@ -2,6 +2,9 @@ import { generateObject } from "ai"
 import { createGoogleGenerativeAI } from "@ai-sdk/google"
 import { aiRecipeSchema } from '~/lib/aiRecipeSchema'
 import type { Preference } from "~/types"
+import { Redis } from "@upstash/redis"
+import { Ratelimit } from "@upstash/ratelimit"
+import { auth } from "~/lib/auth"
 
 
 function generatePrompt(preference: Preference) {
@@ -29,15 +32,22 @@ function generatePrompt(preference: Preference) {
 
 export default defineEventHandler(async (event) => {
     // accept preferences
+    // check ratelimit
     // make llm call using preferences
-    // accept a structure response from llm
+    // fetch a structured response from llm
     // respond back the llm response to the user
     const body = await readBody(event) // preferences
     const config = useRuntimeConfig()
-
-    const gemini = createGoogleGenerativeAI({
-        apiKey: config.GOOGLE_GENERATIVE_AI_API_KEY
+    const session = await auth.api.getSession({
+        headers: event.headers
     })
+
+    if (!session) {
+        throw createError({
+            statusCode: 403,
+            statusMessage: 'Unauthorized user request',
+        })
+    }
 
     if (!body) {
         throw createError({
@@ -45,6 +55,38 @@ export default defineEventHandler(async (event) => {
             statusMessage: 'Missing preferences payload in request',
         })
     }
+
+    const redis = new Redis({
+        url: config.UPSTASH_REDIS_REST_URL,
+        token: config.UPSTASH_REDIS_REST_TOKEN
+    })
+
+    const ratelimit = new Ratelimit({
+        redis: redis,
+        limiter: Ratelimit.slidingWindow(7, '24 h'),
+        analytics: true,
+        prefix: '@upstash/ratelimit'
+    })
+
+    const { success, limit, reset, remaining } = await ratelimit.limit(session.user.id)
+
+    if (!success) {
+        const headers = new Headers({
+            'X-RateLimit-Limit': String(limit),
+            'X-RateLimit-Remaining': String(remaining),
+            'X-RateLimit-Reset': String(reset)
+        })
+        event.node.res.setHeaders(headers)
+        
+        throw createError({
+            statusCode: 429,
+            statusMessage: 'Too Many Requests'
+        })
+    }
+
+    const gemini = createGoogleGenerativeAI({
+        apiKey: config.GOOGLE_GENERATIVE_AI_API_KEY
+    })
 
     try {
         const { object } = await generateObject({
