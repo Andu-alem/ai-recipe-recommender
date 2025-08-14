@@ -38,18 +38,21 @@ watch(error, (err) => {
         limitExceeded.value = true
 
         const resetTimeMs = err.data?.reset
+        console.log("Reset time server setn --- ", resetTimeMs, " and type of reset --- ", typeof resetTimeMs)
         if (resetTimeMs) {
             const rateLimitResetTime = new Date(parseInt(resetTimeMs))
             const now = new Date()
             const diffMs = rateLimitResetTime.getTime() - now.getTime()
 
+            console.log("Minute d/ce is --- ", diffMs)
             if (diffMs > 0) {
-                const diffMin = Math.floor(diffMs / 1000 / 60)
+                const diffMin = Math.floor((diffMs / 1000) / 60)
                 const hours = Math.floor(diffMin / 60)
                 const minutes = diffMin % 60
                 resetTime.value = hours > 0
                 ? `${hours} hr ${minutes} min`
                 : `${minutes} min`
+                console.log("Reset time is --- ", resetTime.value)
             }
         }
     }
