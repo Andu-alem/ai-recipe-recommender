@@ -7,14 +7,17 @@ const limitExceeded = ref(false)
 const resetTime = ref('')
 
 definePageMeta({
-    layout: 'dashboard'
+    layout: 'dashboard',
+    ssr: false
 })
 
 const { preference } = usePreferencesStore()
 
-const { data, pending, error, refresh } = useFetch<GeneratedRecipe[]>('/api/recipe', {
+const { data, status, error, refresh } = useFetch<GeneratedRecipe[]>('/api/recipe', {
     method: 'POST',
     body: JSON.stringify(preference),
+    lazy: true,
+    server: false
 })
 
 // Watch for data changes and populate recipes
@@ -38,13 +41,11 @@ watch(error, (err) => {
         limitExceeded.value = true
 
         const resetTimeMs = err.data?.reset
-        console.log("Reset time server setn --- ", resetTimeMs, " and type of reset --- ", typeof resetTimeMs)
         if (resetTimeMs) {
             const rateLimitResetTime = new Date(parseInt(resetTimeMs))
             const now = new Date()
             const diffMs = rateLimitResetTime.getTime() - now.getTime()
 
-            console.log("Minute d/ce is --- ", diffMs)
             if (diffMs > 0) {
                 const diffMin = Math.floor((diffMs / 1000) / 60)
                 const hours = Math.floor(diffMin / 60)
@@ -52,7 +53,6 @@ watch(error, (err) => {
                 resetTime.value = hours > 0
                 ? `${hours} hr ${minutes} min`
                 : `${minutes} min`
-                console.log("Reset time is --- ", resetTime.value)
             }
         }
     }
@@ -64,7 +64,7 @@ watch(error, (err) => {
         <div class="max-w-4xl mx-auto p-4">
 
         <!-- Loading state -->
-        <div v-if="pending" class="flex justify-center">
+        <div v-if="status==='pending'" class="flex justify-center">
             <LucideLoader2 class="w-10 h-10 text-emerald-500 animate-spin" />
         </div>
 
