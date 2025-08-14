@@ -63,7 +63,7 @@ export default defineEventHandler(async (event) => {
 
     const ratelimit = new Ratelimit({
         redis: redis,
-        limiter: Ratelimit.slidingWindow(7, '24 h'),
+        limiter: Ratelimit.slidingWindow(5, '24 h'),
         analytics: true,
         prefix: '@upstash/ratelimit'
     })
@@ -75,9 +75,9 @@ export default defineEventHandler(async (event) => {
             statusCode: 429,
             statusMessage: 'Too Many Requests',
             data: {
-                limit,
-                remaining,
-                reset
+                limit: String(limit),
+                remaining: String(remaining),
+                reset: String(reset)
             }
         })
     }
