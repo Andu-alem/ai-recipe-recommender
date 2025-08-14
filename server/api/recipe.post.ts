@@ -71,13 +71,12 @@ export default defineEventHandler(async (event) => {
     const { success, limit, reset, remaining } = await ratelimit.limit(session.user.id)
 
     if (!success) {
-        const headers = new Headers({
+        setResponseHeaders(event, {
             'X-RateLimit-Limit': String(limit),
             'X-RateLimit-Remaining': String(remaining),
             'X-RateLimit-Reset': String(reset)
         })
-        event.node.res.setHeaders(headers)
-        
+            
         throw createError({
             statusCode: 429,
             statusMessage: 'Too Many Requests'
