@@ -33,17 +33,13 @@ watch(data, (val) => {
 watch(error, (err) => {
     if (!err) return
 
-    // Nuxt FetchError shape check
-    const fetchErr = err as { statusCode?: number; response?: Response }
-
     // Rate limit case
-    if (fetchErr.statusCode === 429) {
+    if (err.statusCode === 429) {
         limitExceeded.value = true
 
-        const resetHeader = fetchErr.response?.headers?.get?.('X-RateLimit-Reset')
-        if (resetHeader) {
-            const resetTimeMs = parseInt(resetHeader)
-            const rateLimitResetTime = new Date(resetTimeMs)
+        const resetTimeMs = err.data?.reset
+        if (resetTimeMs) {
+            const rateLimitResetTime = new Date(parseInt(resetTimeMs))
             const now = new Date()
             const diffMs = rateLimitResetTime.getTime() - now.getTime()
 
