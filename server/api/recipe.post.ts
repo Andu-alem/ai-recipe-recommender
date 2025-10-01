@@ -88,7 +88,7 @@ export default defineEventHandler(async (event) => {
 
     try {
         const { object } = await generateObject({
-            model: gemini("gemini-1.5-flash"),
+            model: gemini(config.GOOGLE_AI_MODEL ?? ''),
             output: "array",
             schema: aiRecipeSchema,
             temperature: 0.7,

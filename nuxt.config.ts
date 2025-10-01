@@ -23,6 +23,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     dbUri: process.env.MONGODB_URI,
     GOOGLE_GENERATIVE_AI_API_KEY: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+    GOOGLE_AI_MODEL: process.env.GOOGLE_AI_MODEL,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
